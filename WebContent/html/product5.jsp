@@ -65,5 +65,6 @@
 			<div class="delete"><a href="<%=application.getContextPath()%>/UserServlet?op=delete&op1=5">取消收藏</a></div>
 		</div>
 		</div>
+		jksahdksajdkhaskh
 </body>
 </html>
