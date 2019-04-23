@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tjrac.hyc.dao.SaveDao">
+
+	<resultMap type="com.tjrac.hyc.pojo.Save" id="save">
+		<id column="id" property="id" />
+		<result column="save_time" property="save_time" />
+		<association property="pro"
+			javaType="com.tjrac.hyc.pojo.Product">
+			<id column="pid" property="pid" />
+			<result column="pname" property="pname" />
+			<result column="pinfor" property="pinfor" />
+		</association>
+		<association property="user"
+			javaType="com.tjrac.hyc.pojo.User">
+			<id column="uid" property="uid" />
+			<result column="uname" property="uname" />
+			<result column="upassword" property="upassword" />
+		</association>
+
+	</resultMap>
+
+	<select id="findAll" resultMap="save">
+		select
+		u.uname,s.save_time,p.pinfor,p.pname from save s inner join product p
+		on s.pid=p.pid inner join user u on s.uid=u.uid;
+
+	</select>
+	<select id="selectsave" resultType="com.tjrac.hyc.pojo.Save">
+		select * from save where uid=#{user.uid} and pid=#{pro.pid};
+	</select>
+	<select id="show" resultMap="save">
+		select u.uname,p.pname,p.pinfor,save_time from save s inner join product p on
+		s.pid=p.pid inner join user u on s.uid=u.uid where u.uid=#{user.uid};
+	</select>
+	<insert id="save" parameterType="com.tjrac.hyc.pojo.Save">
+		insert into save(uid,pid,save_time)
+		values(#{user.uid},#{pro.pid},#{save_time});
+	</insert>
+	<delete id="delete">
+		delete from save where uid=#{user.uid} and
+		pid=#{pro.pid};
+	</delete>
+
+
+</mapper>
